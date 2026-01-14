@@ -1,2 +1,6 @@
-Plik.py
-.DS_Storeź
+# Created by venv; see https://docs.python.org/3/library/venv.html
+.DS_Store
+venv/
+*.pyc
+**/__pycache__/
+db.sqlite3
