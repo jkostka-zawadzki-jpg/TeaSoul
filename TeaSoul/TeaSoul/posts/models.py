@@ -7,6 +7,9 @@ class Category(models.Model):
     slug = models.SlugField(max_length=120, unique=True)
     description = models.TextField(blank=True)
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self) -> str:
         return self.name
 
@@ -15,6 +18,9 @@ class Topic(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='topics')
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True)
+
+    class Meta:
+        ordering = ['title']
 
     def __str__(self) -> str:
         return self.title
@@ -28,6 +34,9 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self) -> str:
         words = self.text.split()
