@@ -55,7 +55,6 @@ MIDDLEWARE = [
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
-
 ROOT_URLCONF = 'TeaSoul.urls'
 
 TEMPLATES = [
