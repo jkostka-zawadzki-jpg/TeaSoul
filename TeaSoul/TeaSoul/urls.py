@@ -20,7 +20,8 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('api/', include('TeaSoul.posts.api.urls')),
+    path('api/', include('TeaSoul.posts.api_urls')),
+    path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(pattern_name='category-list', permanent=False)),
     path('', include('TeaSoul.posts.urls')),

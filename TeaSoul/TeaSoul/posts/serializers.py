@@ -1,41 +1,40 @@
 from rest_framework import serializers
-from .models import Category, Topic, Post
+
+from .models import Category, Post, Topic
 
 
-class TopicSerializer(serializers.Serializer):
-
-    id = serializers.IntegerField(read_only=True)
-
-    name = serializers.CharField(required=True)
-    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
-    created = serializers.DateTimeField(read_only=True)
-    
-    def create(self, validated_data):
-        return Topic.objects.create(**validated_data)
-
-    # def update(self, instance, validated_data):
-    #     instance.name = validated_data.get('name', instance.name)
-    #     instance.description = validated_data.get('description', instance.description)
-    #     instance.category = validated_data.get('category', instance.category)
-    #     instance.save()
-    #     return instance
-
-class PersonModelSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        # musimy wskazać klasę modelu
         model = Category
-        # definiując poniższe pole możemy określić listę właściwości modelu,
-        # które chcemy serializować
-        fields = ['id', 'name', 'description']
-        # definicja pola modelu tylko do odczytu
-        read_only_fields = ['id']
+        fields = ["id", "name"]
+        read_only_fields = ["id"]
 
-class PersonModelSerializer(serializers.ModelSerializer):
+
+class TopicSerializer(serializers.ModelSerializer):
     class Meta:
-        # musimy wskazać klasę modelu
+        model = Topic
+        fields = ["id", "name", "category", "created"]
+        read_only_fields = ["id", "created"]
+
+
+class PostSerializer(serializers.ModelSerializer):
+    created_by_name = serializers.SerializerMethodField()
+
+    def get_created_by_name(self, obj):
+        full_name = obj.created_by.get_full_name()
+        return full_name if full_name else obj.created_by.username
+
+    class Meta:
         model = Post
-        # definiując poniższe pole możemy określić listę właściwości modelu,
-        # które chcemy serializować
-        fields = ['id', 'title', 'text', 'topic', 'slug', 'created_at', 'updated_at', 'created_by']
-        # definicja pola modelu tylko do odczytu
-        read_only_fields = ['id']
+        fields = [
+            "id",
+            "title",
+            "text",
+            "topic",
+            "slug",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "created_by_name",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at", "created_by", "created_by_name"]
