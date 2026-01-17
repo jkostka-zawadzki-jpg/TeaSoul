@@ -17,9 +17,13 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    path('api/', include('TeaSoul.posts.api.urls')),
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(pattern_name='category-list', permanent=False)),
+    path('', include('TeaSoul.posts.urls')),
 ]
 
 if settings.DEBUG:

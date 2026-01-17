@@ -1,0 +1,31 @@
+{% extends "posts/base.html" %}
+
+{% block title %}Tematy · TeaSoul{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <p class="eyebrow">Przeglad</p>
+        <h1>Tematy do poczytania</h1>
+        <p class="subtitle">Notatki z parzenia, wskazowki i krotsze relacje.</p>
+    </section>
+
+    <section class="list">
+        {% for topic in topics %}
+            <article class="list-row">
+                <div>
+                    <h2>{{ topic.name }}</h2>
+                    <p class="meta">
+                        Kategoria: <a href="{% url 'category-detail' topic.category.pk %}">{{ topic.category.name }}</a>
+                        · Utworzono {{ topic.created|date:"d.m.Y" }}
+                    </p>
+                </div>
+                <div class="list-actions">
+                    <a class="button ghost" href="{% url 'topic-detail' topic.pk %}">Szczegoly</a>
+                    <a class="button" href="{% url 'topic-posts' topic.pk %}">Posty</a>
+                </div>
+            </article>
+        {% empty %}
+            <p class="empty-state">Brak tematow do wyswietlenia.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

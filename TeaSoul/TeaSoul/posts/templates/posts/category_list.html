@@ -1,0 +1,24 @@
+{% extends "posts/base.html" %}
+
+{% block title %}Kategorie · TeaSoul{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <p class="eyebrow">Przeglad</p>
+        <h1>Kategorie herbat i ziol</h1>
+        <p class="subtitle">Wybierz kierunek i zobacz, co najczesciej parzymy.</p>
+    </section>
+
+    <section class="card-grid">
+        {% for category in categories %}
+            <article class="card">
+                <h2>{{ category.name }}</h2>
+                <div class="card-actions">
+                    <a class="button" href="{% url 'category-detail' category.pk %}">Szczegoly</a>
+                </div>
+            </article>
+        {% empty %}
+            <p class="empty-state">Brak kategorii do wyswietlenia.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

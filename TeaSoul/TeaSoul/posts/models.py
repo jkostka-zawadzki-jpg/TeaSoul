@@ -1,29 +1,17 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
+# Create your models here.
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=120, unique=True)
+    name = models.CharField(max_length=60)
     description = models.TextField(blank=True)
-
-    class Meta:
-        ordering = ['name']
-
-    def __str__(self) -> str:
-        return self.name
+    created = models.DateTimeField(auto_now_add=True)
 
 
 class Topic(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='topics')
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=220, unique=True)
-
-    class Meta:
-        ordering = ['title']
-
-    def __str__(self) -> str:
-        return self.title
+    name = models.CharField(max_length=60)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
 
 
 class Post(models.Model):
@@ -35,10 +23,5 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    class Meta:
-        ordering = ['-created_at']
-
     def __str__(self) -> str:
-        words = self.text.split()
-        preview = ' '.join(words[:5])
-        return f"{preview}..." if len(words) > 5 else preview
+        return self.title

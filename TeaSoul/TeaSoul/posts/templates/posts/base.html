@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}TeaSoul{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'posts/posts.css' %}">
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="brand">
+                <span class="brand-mark">TeaSoul</span>
+                <span class="brand-subtitle">Notatki dla ciekawych smakow</span>
+            </div>
+            <nav class="site-nav">
+                <a href="{% url 'category-list' %}">Kategorie</a>
+                <a href="{% url 'topic-list' %}">Tematy</a>
+                <a href="{% url 'post-list' %}">Posty</a>
+            </nav>
+        </header>
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="site-footer">
+            <span>TeaSoul · dziennik zaparzania</span>
+        </footer>
+    </body>
+</html>

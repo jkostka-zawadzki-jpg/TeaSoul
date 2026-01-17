@@ -1,0 +1,29 @@
+{% extends "posts/base.html" %}
+
+{% block title %}{{ category.name }} · TeaSoul{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <p class="eyebrow">Kategoria</p>
+        <h1>{{ category.name }}</h1>
+        <p class="subtitle">Tematy zebrane w tej kategorii.</p>
+    </section>
+
+    <section class="list">
+        <h2 class="section-title">Tematy</h2>
+        {% for topic in category.topic_set.all %}
+            <article class="list-row">
+                <div>
+                    <h3>{{ topic.name }}</h3>
+                    <p class="meta">Utworzono {{ topic.created|date:"d.m.Y" }}</p>
+                </div>
+                <div class="list-actions">
+                    <a class="button ghost" href="{% url 'topic-detail' topic.pk %}">Szczegoly</a>
+                    <a class="button" href="{% url 'topic-posts' topic.pk %}">Posty</a>
+                </div>
+            </article>
+        {% empty %}
+            <p class="empty-state">Brak tematow w tej kategorii.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

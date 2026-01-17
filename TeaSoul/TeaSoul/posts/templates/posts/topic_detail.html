@@ -1,0 +1,22 @@
+{% extends "posts/base.html" %}
+
+{% block title %}{{ topic.name }} · TeaSoul{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <p class="eyebrow">Temat</p>
+        <h1>{{ topic.name }}</h1>
+        <p class="subtitle">
+            Kategoria:
+            <a href="{% url 'category-detail' topic.category.pk %}">{{ topic.category.name }}</a>
+        </p>
+    </section>
+
+    <section class="detail-card">
+        <p class="meta">Utworzono {{ topic.created|date:"d.m.Y" }}</p>
+        <div class="card-actions">
+            <a class="button" href="{% url 'topic-posts' topic.pk %}">Zobacz posty</a>
+            <a class="button ghost" href="{% url 'topic-list' %}">Wroc do tematow</a>
+        </div>
+    </section>
+{% endblock %}

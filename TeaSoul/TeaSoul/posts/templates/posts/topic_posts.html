@@ -1,0 +1,30 @@
+{% extends "posts/base.html" %}
+
+{% block title %}{{ topic.name }} · posty · TeaSoul{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <p class="eyebrow">Lista postow</p>
+        <h1>{{ topic.name }}</h1>
+        <p class="subtitle">Najnowsze wpisy na poczatku.</p>
+    </section>
+
+    <section class="list">
+        {% for post in posts %}
+            <article class="list-row">
+                <div>
+                    <h2>{{ post.title }}</h2>
+                    <p class="meta">
+                        {{ post.created_at|date:"d.m.Y" }} · autor {{ post.created_by.get_full_name|default:post.created_by.username }}
+                        · <a href="{% url 'topic-detail' post.topic.pk %}">{{ post.topic.name }}</a>
+                    </p>
+                </div>
+                <div class="list-actions">
+                    <a class="button" href="{% url 'post-detail' post.pk %}">Czytaj</a>
+                </div>
+            </article>
+        {% empty %}
+            <p class="empty-state">Brak postow w tym temacie.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

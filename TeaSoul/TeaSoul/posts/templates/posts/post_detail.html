@@ -1,0 +1,29 @@
+{% extends "posts/base.html" %}
+
+{% block title %}{{ post.title }} · TeaSoul{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <p class="eyebrow">Post</p>
+        <h1>{{ post.title }}</h1>
+        <p class="subtitle">
+            Temat:
+            <a href="{% url 'topic-detail' post.topic.pk %}">{{ post.topic.name }}</a>
+            · Kategoria:
+            <a href="{% url 'category-detail' post.topic.category.pk %}">{{ post.topic.category.name }}</a>
+        </p>
+    </section>
+
+    <article class="detail-card">
+        <p class="meta">
+            {{ post.created_at|date:"d.m.Y" }} · autor {{ post.created_by.get_full_name|default:post.created_by.username }}
+        </p>
+        <div class="post-body">
+            {{ post.text|linebreaks }}
+        </div>
+        <div class="card-actions">
+            <a class="button ghost" href="{% url 'post-list' %}">Wroc do postow</a>
+            <a class="button" href="{% url 'topic-posts' post.topic.pk %}">Wiecej w temacie</a>
+        </div>
+    </article>
+{% endblock %}
